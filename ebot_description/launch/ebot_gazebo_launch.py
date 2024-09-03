@@ -11,8 +11,8 @@
 *
 *  Filename:			ebot_gazebo_launch.py
 *  Description:         Use this file to spawn ebot inside e-yantra warehouse world in the gazebo simulator and publish robot states.
-*  Created:				16/07/2023
-*  Last Modified:	    13/08/2024
+*  Created:				16/08/2024
+*  Last Modified:	    19/08/2024
 *  Modified by:         Siddharth
 *  Author:				e-Yantra Team
 *  

@@ -1,0 +1,194 @@
+<?xml version='1.0'?>
+
+<!--
+  Author: Jaison
+  Organization: e-Yantra, IIT Bombay
+  This file is to be used on AS IS basis.
+ -->
+
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="camera_link">
+
+<joint name="camera_joint" type="fixed">
+  <parent link="camera_link" />
+  <child link="camera_bottom_screw_frame" />
+  <origin xyz="0 0.0 0" rpy="0 0 0" />
+</joint>
+
+<!-- <link name="base_sensor_link"></link> -->
+<link name="camera_link_depth"></link>
+<link name="camera_bottom_screw_frame"></link>
+<link name="camera_depth_frame"></link>
+<link name="camera_depth_optical_frame"></link>
+<link name="camera_color_frame"></link>
+<link name="camera_color_optical_frame"></link>
+<link name="camera_left_ir_frame"></link>
+<link name="camera_left_ir_optical_frame"></link>
+<link name="camera_right_ir_frame"></link>
+<link name="camera_right_ir_optical_frame"></link>
+
+<joint name="camera_link_joint" type="fixed">
+  <parent link="camera_bottom_screw_frame" />
+  <child link="camera_link_depth" />
+  <origin xyz="0 0.0 0.0 " rpy="0 0 0" />
+</joint>
+
+<joint name="camera_depth_joint" type="fixed">
+  <parent link="camera_link_depth" />
+  <child link="camera_depth_frame" />
+  <origin xyz="0 0 0" rpy="0 0 0" />
+</joint>
+<joint name="camera_depth_optical_joint" type="fixed">
+  <parent link="camera_depth_frame" />
+  <child link="camera_depth_optical_frame" />
+  <origin xyz="0 0 0 " rpy="-1.57 0 -1.57" />
+</joint>
+<joint name="camera_color_joint" type="fixed">
+  <parent link="camera_depth_frame" />
+  <child link="camera_color_frame" />
+  <origin xyz="0 0 0" rpy="0 0 0" />
+</joint>
+<joint name="camera_color_optical_joint" type="fixed">
+  <parent link="camera_color_frame" />
+  <child link="camera_color_optical_frame" />
+  <origin xyz="0 0 0 " rpy="-1.57 0 -1.57" />
+</joint>
+<joint name="camera_left_ir_joint" type="fixed">
+  <parent link="camera_depth_frame" />
+  <child link="camera_left_ir_frame" />
+  <origin xyz="0 0 0 " rpy="0 0 0 " />
+</joint>
+<joint name="camera_left_ir_optical_joint" type="fixed">
+  <parent link="camera_left_ir_frame" />
+  <child link="camera_left_ir_optical_frame" />
+  <origin xyz="0 0 0 " rpy="-1.57 0 -1.57" />
+</joint>
+<joint name="camera_right_ir_joint" type="fixed">
+  <parent link="camera_depth_frame" />
+  <child link="camera_right_ir_frame" />
+  <origin xyz="0 -0.050 0 " rpy="0 0 0" />
+</joint>
+<joint name="camera_right_ir_optical_joint" type="fixed">
+  <parent link="camera_right_ir_frame" />
+  <child link="camera_right_ir_optical_frame" />
+  <origin xyz="0 0 0 " rpy="-1.57 0 -1.57" />
+</joint>
+
+
+  <!-- Adding sensors -->
+  <gazebo reference="camera_bottom_screw_frame"> 
+        <sensor name="cameradepth" type="depth">
+                <camera name="camera">
+                    <horizontal_fov>1.2043</horizontal_fov>
+                    <image>
+                        <width>1280</width>
+                        <height>720</height>
+                        <format>R8G8B8</format>
+                    </image>
+                    <clip>
+                        <near>0.1</near>
+                        <far>100</far>
+                    </clip>
+                </camera>
+                <always_on>1</always_on>
+                <update_rate>30</update_rate>
+                <visualize>0</visualize>
+            </sensor>
+            <sensor name="cameracolor" type="camera">
+                <camera name="camera">
+                    <horizontal_fov>1.2043</horizontal_fov>
+                    <image>
+                        <width>1280</width>
+                        <height>720</height>
+                        <format>RGB_INT8</format>
+                    </image>
+                    <clip>
+                        <near>0.1</near>
+                        <far>100</far>
+                    </clip>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.007</stddev>
+                    </noise>
+                </camera>
+                <always_on>1</always_on>
+                <update_rate>30</update_rate>
+                <visualize>0</visualize>
+            </sensor>
+            <sensor name="cameraired1" type="camera">
+                <camera name="camera">
+                    <horizontal_fov>1.2043</horizontal_fov>
+                    <image>
+                        <width>1280</width>
+                        <height>720</height>
+                        <format>L_INT8</format>
+                    </image>
+                    <clip>
+                        <near>0.1</near>
+                        <far>100</far>
+                    </clip>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.05</stddev>
+                    </noise>
+                </camera>
+                <always_on>1</always_on>
+                <update_rate>1</update_rate>
+                <visualize>0</visualize>
+            </sensor>
+            <sensor name="cameraired2" type="camera">
+                <camera name="camera">
+                    <horizontal_fov>1.2043</horizontal_fov>
+                    <image>
+                        <width>1280</width>
+                        <height>720</height>
+                        <format>L_INT8</format>
+                    </image>
+                    <clip>
+                        <near>0.1</near>
+                        <far>100</far>
+                    </clip>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.05</stddev>
+                    </noise>
+                </camera>
+                <always_on>1</always_on>
+                <update_rate>1</update_rate>
+                <visualize>0</visualize>
+            </sensor>
+
+      
+  </gazebo>
+
+  <!-- Adding plugin -->
+  <gazebo>
+  <plugin name="camera" filename="librealsense_gazebo_plugin.so">
+        <prefix>camera</prefix>
+        <depthUpdateRate>15.0</depthUpdateRate>
+        <colorUpdateRate>15.0</colorUpdateRate>
+        <infraredUpdateRate>15.0</infraredUpdateRate>
+        <depthTopicName>camera/aligned_depth_to_color/image_raw</depthTopicName>
+        <depthCameraInfoTopicName>camera/depth/camera_info</depthCameraInfoTopicName>
+        <colorTopicName>camera/color/image_raw</colorTopicName>
+        <colorCameraInfoTopicName>camera/color/camera_info</colorCameraInfoTopicName>
+        <infrared1TopicName>camera/infra1/image_raw</infrared1TopicName>
+        <infrared1CameraInfoTopicName>camera/infra1/camera_info</infrared1CameraInfoTopicName>
+        <infrared2TopicName>camera/infra2/image_raw</infrared2TopicName>
+        <infrared2CameraInfoTopicName>camera/infra2/camera_info</infrared2CameraInfoTopicName>
+        <colorOpticalframeName>camera_color_optical_frame</colorOpticalframeName>
+        <depthOpticalframeName>camera_depth_optical_frame</depthOpticalframeName>
+        <infrared1OpticalframeName>camera_left_ir_optical_frame</infrared1OpticalframeName>
+        <infrared2OpticalframeName>camera_right_ir_optical_frame</infrared2OpticalframeName>
+        <rangeMinDepth>0.1</rangeMinDepth>
+        <rangeMaxDepth>2.0</rangeMaxDepth>
+        <pointCloud>true</pointCloud>
+        <pointCloudTopicName>camera/depth/color/points</pointCloudTopicName>
+        <pointCloudCutoff>0.1</pointCloudCutoff>
+        <pointCloudCutoffMax>2.0</pointCloudCutoffMax>
+  </plugin>
+
+  </gazebo>
+</robot>

@@ -322,8 +322,8 @@
   </joint> -->
 
 <!-- Siddharth- Add  / Remove the following lines to disable the ultrasonic ray in gazebo -->
-  <!-- <xacro:ultrasonic_sensor name="ultrasonic_rl"/> 
-  <xacro:ultrasonic_sensor name="ultrasonic_rr"/>  -->
+  <xacro:ultrasonic_sensor name="ultrasonic_rl"/> 
+  <xacro:ultrasonic_sensor name="ultrasonic_rr"/> 
 <!-- End -->
 
 <!-- imu -->

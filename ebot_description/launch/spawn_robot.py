@@ -18,7 +18,7 @@ def main(args=None):
     req.robot_namespace = ""
     req.reference_frame = "world"
 
-    while not cli.wait_for_service(timeout_sec=30.0):
+    while not cli.wait_for_service(timeout_sec=1000.0):
         node.get_logger().info('service not available, waiting again...')
 
     future = cli.call_async(req)

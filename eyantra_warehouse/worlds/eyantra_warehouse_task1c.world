@@ -123,7 +123,7 @@
 <include>
     <uri>model://boxes/box_1</uri>
     <name>box1</name>
-    <pose>1.393 -1.841 1.234 0 0 -1.57</pose>
+    <pose>1.13 -2.455 0.89 0 0 0.0</pose>
 </include>
 
 <!-- RACK 1 -->
@@ -138,13 +138,13 @@
 <include>
     <uri>model://boxes/box_3</uri>
     <name>box3</name>
-    <pose>0.846 -2.794 0.439 -1.57 -1.57 1.57</pose>
+    <pose>1.35 -1.865 0.51 0 0 -1.57</pose>
 </include>
 
 <include>
     <uri>model://boxes/box_49</uri>
     <name>box49</name>
-    <pose>0.846 -2.158 0.439 1.57 -1.57 -1.57</pose>
+    <pose>1.35 -1.865 0.89 0 0 -1.57</pose>
 </include>
 <!-- RACK 2 -->
 

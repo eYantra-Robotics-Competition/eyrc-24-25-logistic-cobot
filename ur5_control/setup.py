@@ -11,6 +11,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         ('lib/' + package_name, [package_name + '/__init__.py']),
+        # ('lib/' + package_name + '/pyarmor_runtime_000000', [package_name + '/pyarmor_runtime_000000/pyarmor_runtime.so']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

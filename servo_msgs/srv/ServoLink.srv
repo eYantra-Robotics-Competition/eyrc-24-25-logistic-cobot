@@ -1,0 +1,6 @@
+string box_name    # Name of the box.
+
+string box_link    # Name of the box link.
+---
+bool success          # Whether the servo move or not.
+string message        # Feedback message.

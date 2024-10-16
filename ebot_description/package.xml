@@ -3,7 +3,7 @@
 <package format="3">
   <name>ebot_description</name>
   <version>0.0.0</version>
-  <description>This package is used for simulating ebot of CL theme of eYRC 2023-24.</description>
+  <description>This package is used for simulating ebot of LB theme of eYRC 2024-25.</description>
   <maintainer email="helpdesk@e-yantra.org">eyantra</maintainer>
   <license>TODO: License declaration</license>
 
@@ -12,7 +12,8 @@
 
   <depend>rclcpp</depend>
   <depend>rclpy</depend>
-  <depend>ebot_docking</depend>
+  <!-- <depend>ebot_docking</depend> -->
+  <depend>payload_service</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

@@ -20,18 +20,27 @@ if(BUILD_TESTING)
 endif()
  
 
-install(PROGRAMS scripts/armed_1/spawner_box_1b.py 
+install(PROGRAMS scripts/armed_1/spawner_box_1b.py scripts/armed_2/spawner_box_1c.py
  
   DESTINATION lib/${PROJECT_NAME}
 )
 
 install(
-  DIRECTORY scripts/armed_1/pyarmor_runtime_000000 
+  DIRECTORY scripts/armed_1/pyarmor_runtime_000000 scripts/armed_2/pyarmor_runtime_000000
   DESTINATION lib/${PROJECT_NAME}
 )
 
 
 
+install(PROGRAMS scripts/armed_3/spawner_box_2a.py 
+ 
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(
+  DIRECTORY scripts/armed_3/pyarmor_runtime_000000 
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 add_compile_options(-pg)
 

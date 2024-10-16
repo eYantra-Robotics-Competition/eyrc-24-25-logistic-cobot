@@ -1,17 +1,5 @@
 <?xml version="1.0"?>
-<!--  
-  Project Name: ebot 
-  Created on:   2.10.2020
-  Modified by:   Ravikumar
-  Last Modified:	27/08/2023
-  Author: e-Yantra Team
-  Copyright (c) 2020 eYantra IITB 
 
-Following urdf describes ebot with trolley.
-
-
-This urdf is optimized to work only with gazebo simulator.
--->
 <robot name="ebot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 <xacro:include filename="$(find ebot_description)/models/ebot/ebot.gazebo" />
 
@@ -965,5 +953,63 @@ This urdf is optimized to work only with gazebo simulator.
     <axis
       xyz="0 0 0" />
   </joint>
+
+  <link name="linear_actuator_link">
+    <visual>
+      <geometry>
+        <box size="0.5 0.05 0.05"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+      <material name="green">
+        <color rgba="0 0.8 .8 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.5 0.05 0.05"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.2"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+  </link>
+
+  <joint
+    name="linear_actuator_joint"
+    type="prismatic">
+    <parent link="ebot_base_link"/>
+    <child link="linear_actuator_link"/>
+    <origin xyz="0.2 0 0.25" rpy="0 0 1.57"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="0.0" upper="0.6" effort="100.0" velocity="1.0"/>
+    <dynamics damping="0.1" friction="10"/>
+  </joint>
+
+  <ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="linear_actuator_joint">
+      <command_interface name="effort">
+        <param name="min">-1000</param>
+        <param name="max">1000</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </ros2_control>
+  
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <robot_param>robot_description</robot_param>
+      <robot_param_node>ebot_RD</robot_param_node>
+      <parameters>$(find ebot_description)/config/controller.yaml</parameters>
+    </plugin>
+  </gazebo>
 
 </robot>

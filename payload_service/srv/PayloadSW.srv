@@ -1,0 +1,5 @@
+bool receive
+bool drop
+---
+bool success   # indicate successful run of triggered service
+string message # Box name 

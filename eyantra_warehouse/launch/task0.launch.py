@@ -68,9 +68,20 @@ def generate_launch_description():
     	package='gazebo_ros', 
         name='ebot_spawner',
     	executable='spawn_entity.py',
+        # arguments=['-entity', 'ebot', '-topic', 'robot_description_ebot', '-x', '1.1', '-y', '4.35', '-z', '0.1', '-Y', '3.14'],
+        # arguments=['-entity', 'ebot', '-topic', 'robot_description_ebot', '-x', '0.0', '-y', '0.0', '-z', '0.1', '-Y', '0.0'],
         arguments=['-entity', 'ebot', '-topic', 'robot_description_ebot', '-x', '1.84', '-y', '-9.05', '-z', '0.1', '-Y', '3.14'],
         output='screen'
     )
+
+    spawn_arm = launch_ros.actions.Node(
+    	package='gazebo_ros', 
+        name='ur5_spawner',
+    	executable='spawn_entity.py',
+        arguments=['-entity', 'ur5', '-topic', 'robot_description_ur5', '-x', '1.6', '-y', '-2.4', '-z', '0.58', '-Y', '3.14'],
+        # arguments=['-entity', 'ur5', '-topic', 'robot_description_ur5', '-x', '-5.6', '-y', '-2.4', '-z', '0.58', '-Y', '3.14'],
+        output='screen')
+
                                                  
     return launch.LaunchDescription([
         launch.actions.DeclareLaunchArgument(name='gui', default_value='True',
@@ -80,5 +91,6 @@ def generate_launch_description():
         start_world,
         robot_state_publisher_node_ebot,
         spawn_ebot,
-        static_transform
+        static_transform,
+        spawn_arm
     ])

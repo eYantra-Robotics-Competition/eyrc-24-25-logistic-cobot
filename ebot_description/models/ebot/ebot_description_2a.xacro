@@ -1,0 +1,1015 @@
+<?xml version="1.0"?>
+
+<robot name="ebot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:include filename="$(find ebot_description)/models/ebot/ebot.gazebo" />
+
+<!-- macros for calculating inertia -->
+
+<xacro:property name="base_mass" value="46.034" />
+<xacro:property name="wheel_mass" value="2.637" />
+
+<xacro:macro name="box_inertia" params="b_mass b_x b_y b_z">
+        <mass value="${b_mass}"/>
+        <inertia  ixx="${b_mass*(b_y*b_y+b_z*b_z)/12}" ixy = "0" ixz = "0"
+                  iyy="${b_mass*(b_x*b_x+b_z*b_z)/12}" iyz = "0"
+                  izz="${b_mass*(b_x*b_x+b_y*b_y)/12}"/>
+</xacro:macro>
+
+<!-- Changed since y and z are switched in the axis frame -->
+<xacro:macro name="cylinder_inertia" params="c_mass r l">
+        <mass value="${c_mass}"/>
+        <inertia  ixx="${c_mass*(3*r*r+l*l)/12}" ixy = "0" ixz = "0"
+                  iyy="${c_mass*(r*r)/2}" iyz = "0"
+                  izz="${c_mass*(3*r*r+l*l)/12}" />
+</xacro:macro>
+
+
+<!--   base of the robot -->
+  <link name="ebot_base_link">
+  </link>
+
+    <!-- BASE LINK -->
+    <joint name="base_footprint_joint" type="fixed">
+        <parent link="ebot_base_link"/>
+        <child link="base_footprint"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+    <link name="base_footprint">
+    </link>
+
+    <joint name="base_link_ebot_base_joint" type="fixed">
+        <parent link="ebot_base_link"/>
+        <child link="ebot_base"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+  <link
+    name="ebot_base">
+    <inertial>
+      <origin xyz="0 0.0 0.12" rpy="0 0 0" />
+<!--       <mass
+        value="60" />
+         <inertia ixx="0.7625" ixy="0" ixz="0" iyy="2.0236" iyz="0" izz="2.1611"/>
+ -->
+      <xacro:box_inertia b_mass="${base_mass}" b_x="0.585" b_y="0.30" b_z="0.25"/>  
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/chassis.dae" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin
+          xyz="0 0.0 0.12"
+          rpy="0 0 0" />
+        <geometry>
+          <box size="0.585 0.30 0.25"/>
+        </geometry>
+    </collision>
+  </link>
+
+<!-- wheels -->
+<xacro:property name="wheel_inertia">
+    <xacro:cylinder_inertia c_mass="${wheel_mass}" r = "0.1" l="0.05"/>   <!--  mass radius length of a wheel -->
+</xacro:property>
+
+
+<!-- front wheel right -->
+
+  <link
+    name="FWR">
+    <inertial>
+      <origin
+        xyz="6.6592E-05 0.025016 -1.3483E-06"
+        rpy="0 0 0" />
+<!--       <mass
+        value="2" />
+          <inertia ixx="0.0054" ixy="0" ixz="0" iyy="0.0054" iyz="0" izz="0.01"/> -->
+      <xacro:insert_block name="wheel_inertia" />
+       
+    </inertial>
+
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/FWR.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+
+    <collision>
+      <origin
+         xyz="0 0.025 0"
+        rpy="1.57 1.57 0" />
+      <geometry>
+         <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="FWRJ"
+    type="continuous">
+    <origin
+      xyz="0.202539503068943 -0.189027702306049 0.0449999999999943"
+      rpy="-3.14159265358979 0.911096362238563 0.00679706827343889" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="FWR" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+
+<!-- front wheel left -->
+  <link
+    name="FWL">
+    <inertial>
+      <origin
+        xyz="6.6594E-05 0.025016 -1.349E-06"
+        rpy="0 0 0" />
+ <!--      <mass
+        value="2" />
+          <inertia ixx="0.0054" ixy="0" ixz="0" iyy="0.0054" iyz="0" izz="0.01"/> -->
+           <xacro:insert_block name="wheel_inertia" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/FWL.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+         xyz="0 0.025 0"
+        rpy="1.57 1.57 0" />
+      <geometry>
+         <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="FWLJ"
+    type="continuous">
+    <origin
+      xyz="0.199948480594093 0.192163491981716 0.0450000000000047"
+      rpy="0 0 0.00679706827344463" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="FWL" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+
+
+<!--   rear wheel right -->
+  <link
+    name="RWR">
+    <inertial>
+      <origin
+        xyz="6.6592E-05 0.025016 -1.3483E-06"
+        rpy="0 0 0" />
+<!--       <mass
+        value="2" />
+          <inertia ixx="0.0054" ixy="0" ixz="0" iyy="0.0054" iyz="0" izz="0.01"/> -->
+           <xacro:insert_block name="wheel_inertia" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/RWR.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+   <collision>
+      <origin
+         xyz="0 0.025 0"
+        rpy="1.57 1.57 0" />
+      <geometry>
+         <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RWRJ"
+    type="continuous">
+    <origin
+      xyz="-0.197451256939211 -0.191746508680447 0.044999999999993"
+      rpy="-3.14159265358979 0.544912084409921 0.00679706827344312" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="RWR" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+
+<!--   rear wheel left -->
+  <link
+    name="RWL">
+    <inertial>
+      <origin
+        xyz="6.6594E-05 0.025016 -1.349E-06"
+        rpy="0 0 0" />
+<!--       <mass
+        value="2" />
+
+          <inertia ixx="0.0054" ixy="0" ixz="0" iyy="0.0054" iyz="0" izz="0.01"/> -->
+        <xacro:insert_block name="wheel_inertia" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/RWL.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+   <collision>
+      <origin
+         xyz="0 0.025 0"
+        rpy="1.57 1.57 0" />
+      <geometry>
+         <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="RWLJ"
+    type="continuous">
+    <origin
+      xyz="-0.200042279414009 0.189444685607321 0.0449999999999969"
+      rpy="0 0 0.00679706827344463" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="RWL" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+
+
+  <!-- Intel real sense Camera for 3D mapping-->
+  <!-- <joint name="realsensejoint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin xyz="0.277944460576403 0.00208437301780086 0.0230507258091751" rpy="0 0 0"/>
+    <parent link="ebot_base"/>
+    <child link="camera_link"/>
+  </joint>
+
+  <link name="camera_link">
+    <collision>
+      <origin xyz="0.02 0 0" rpy="0 0 0"/>
+      <geometry>0
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707 0 1.5707"/>
+      <geometry>
+        <mesh filename="file://$(find ebot_description)/meshes/NAVRS.STL" />
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+  </link>
+
+
+  <joint name="camera_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    <parent link="camera_link"/>
+    <child link="camera_rgb_frame"/>
+  </joint>
+
+  <link name="camera_rgb_frame">
+  </link>
+
+  <joint name="camera_depth_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    <parent link="camera_link"/>
+    <child link="camera_depth_frame"/>
+  </joint>
+
+    <link name="camera_depth_frame">
+  </link> -->
+
+
+<!-- LIDAR -->
+<link name="laser">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <!-- <inertial>
+      <mass value="0.09"/>
+      <inertia ixx="4.275e-05" ixy="0" ixz="0" iyy="4.275e-05" iyz="0" izz="5.5125e-05"/>
+    </inertial>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.040" radius="0.030"/>
+      </geometry>
+    </collision> -->
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.040" radius="0.030"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="rplidar_joint" type="fixed">
+    <axis xyz="0 1 0"/>
+    <origin xyz="0.255540836099039 0 0.18"
+      rpy="0 0 0.00679706827344463" />
+
+    <parent link="ebot_base"/>
+    <child link="laser"/>
+    <limit effort="1000" lower="0" upper="6.28" velocity="100"/>
+    <axis rpy="0 0 0" xyz="0.02 0 0.178"/>
+    <joint_properties damping="5.0" friction="1.0"/>
+  </joint>
+
+<!-- front ultrasonic sensor 1-->
+  <link
+    name="FUS1">
+    <!-- <inertial>
+      <origin
+        xyz="-0.00265918092876655 2.08166817117217E-17 0.0100193625139959"
+        rpy="0 0 0" />
+      <mass
+        value="0.0152532066391543" />
+      <inertia
+        ixx="4.77814992940302E-06"
+        ixy="-2.01819824421892E-21"
+        ixz="2.64657807499124E-08"
+        iyy="1.003384637723E-06"
+        iyz="-8.80528876343328E-21"
+        izz="4.55679776636487E-06" />
+    </inertial> -->
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/FUS1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+          <box size="0.019 0.057 0.028"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="FUS1J"
+    type="fixed">
+    <origin
+      xyz="0.297825909825268 -0.157279305693451 0.0977263808983278"
+      rpy="-1.5707963267949 0 0.00679706827344463" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="FUS1" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+<!-- front ultrasonic sensor 2 -->
+  <link
+    name="FUS2">
+    <!-- <inertial>
+      <origin
+        xyz="-0.0026592 1.9949E-17 0.010019"
+        rpy="0 0 0" />
+      <mass
+        value="0.015253" />
+      <inertia
+        ixx="4.7781E-06"
+        ixy="-2.0925E-21"
+        ixz="2.6466E-08"
+        iyy="1.0034E-06"
+        iyz="-9.4695E-21"
+        izz="4.5568E-06" />
+    </inertial> -->
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/FUS2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.25098 0.25098 0.25098 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+           <box size="0.019 0.057 0.028"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="FUS2J"
+    type="fixed">
+    <origin
+      xyz="0.295786805044471 0.142713764312663 0.0977263808983286"
+      rpy="-1.5707963267949 0 0.00679706827344463" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="FUS2" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+<!--   front ultrasonic sensor 3 -->
+  <link
+    name="FUS3">
+    <!-- <inertial>
+      <origin
+        xyz="-0.0026592 5.5511E-17 0.010019"
+        rpy="0 0 0" />
+      <mass
+        value="0.015253" />
+      <inertia
+        ixx="4.7781E-06"
+        ixy="2.7832E-20"
+        ixz="2.6466E-08"
+        iyy="1.0034E-06"
+        iyz="1.4502E-20"
+        izz="4.5568E-06" />
+    </inertial> -->
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/FUS3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.25098 0.25098 0.25098 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+           <box size="0.019 0.057 0.028"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="FUS3J"
+    type="fixed">
+    <origin
+      xyz="0.27274874909921 -0.0749478536996718 0.0424745013517897"
+      rpy="0 0.785398163397449 0.00679706827344116" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="FUS3" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+
+<!--   front ultrasonic sensor 4 -->
+  <link
+    name="FUS4">
+    <!-- <inertial>
+      <origin
+        xyz="-0.00265918092876644 6.93889390390723E-17 0.0100193625139959"
+        rpy="0 0 0" />
+      <mass
+        value="0.0152532066391543" />
+      <inertia
+        ixx="4.77814992940302E-06"
+        ixy="2.8163959262392E-20"
+        ixz="2.64657807499109E-08"
+        iyy="1.003384637723E-06"
+        iyz="2.09456577324828E-20"
+        izz="4.55679776636487E-06" />
+    </inertial> -->
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/FUS4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+           <box size="0.019 0.057 0.028"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="FUS4J"
+    type="fixed">
+    <origin
+      xyz="0.271702008645067 0.0790485889034664 0.0424745013517894"
+      rpy="0 0.785398163397449 0.00679706827344116" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="FUS4" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+<!-- Updating the name of ultrasonic sensor links for name convenience  -->
+
+<!--   Rear ultra sonic sensor 5 -->
+
+      <!-- 
+        Rear left
+       -->
+  <link
+    name="ultrasonic_rl">
+    <!-- <inertial>
+      <origin
+        xyz="-0.0026592 2.6021E-17 0.010019"
+        rpy="0 0 0" />
+      <mass
+        value="0.015253" />
+      <inertia
+        ixx="4.7781E-06"
+        ixy="-1.9723E-21"
+        ixz="2.6466E-08"
+        iyy="1.0034E-06"
+        iyz="-7.7105E-21"
+        izz="4.5568E-06" />
+    </inertial> -->
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/RUS5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.25098 0.25098 0.25098 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+           <box size="0.019 0.057 0.028"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="RUS5J"
+    type="fixed">
+    <origin
+      xyz="-0.29532868617037 0.157696288994793 0.0977029437251515"
+      rpy="-1.5707963267949 0 -3.13479558531634" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="ultrasonic_rl" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+<!--   Rear ultra sonic sensor 6 -->
+
+      <!-- 
+        Rear right
+       -->
+  <link
+    name="ultrasonic_rr">
+    <!-- <inertial>
+      <origin
+        xyz="-0.00265918092876644 2.34187669256869E-17 0.0100193625139959"
+        rpy="0 0 0" />
+      <mass
+        value="0.0152532066391543" />
+      <inertia
+        ixx="4.77814992940302E-06"
+        ixy="-1.34867897211379E-21"
+        ixz="2.64657807499114E-08"
+        iyy="1.003384637723E-06"
+        iyz="-1.29818552470248E-20"
+        izz="4.55679776636487E-06" />
+    </inertial> -->
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/RUS6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+           <box size="0.019 0.057 0.028"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="RUS6J"
+    type="fixed">
+    <origin
+      xyz="-0.293289581389573 -0.14229678101132 0.0977029437251508"
+      rpy="-1.5707963267949 0 -3.13479558531634" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="ultrasonic_rr" /> 
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+
+<!--   Right ultra sonic sensor 7 -->
+  <link
+    name="RHUS7">
+    <!-- <inertial>
+      <origin
+        xyz="-0.00265918092876641 1.23570598198341E-12 0.0100193625139959"
+        rpy="0 0 0" />
+      <mass
+        value="0.0152532066391543" />
+      <inertia
+        ixx="4.77814992940302E-06"
+        ixy="3.27217392921119E-18"
+        ixz="2.64657807499107E-08"
+        iyy="1.003384637723E-06"
+        iyz="4.38229124201629E-16"
+        izz="4.55679776636487E-06" />
+    </inertial> -->
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/RHUS7.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+           <box size="0.019 0.057 0.028"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="RHUS7J"
+    type="fixed">
+    <origin
+      xyz="-0.17860231149778 -0.148017381955971 0.189449821416576"
+      rpy="0 0 -1.56399925852145" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="RHUS7" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+<!--   Right ultra sonicsensor 9 -->
+  <link
+    name="RHUS9">
+    <!-- <inertial>
+      <origin
+        xyz="-0.0026592 6.9389E-18 0.010019"
+        rpy="0 0 0" />
+      <mass
+        value="0.015253" />
+      <inertia
+        ixx="4.7781E-06"
+        ixy="1.6008E-20"
+        ixz="2.6466E-08"
+        iyy="1.0034E-06"
+        iyz="-1.185E-20"
+        izz="4.5568E-06" />
+    </inertial> -->
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/RHUS9.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.25098 0.25098 0.25098 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+           <box size="0.019 0.057 0.028"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="RHUS9J"
+    type="fixed">
+    <origin
+      xyz="0.141804076845343 -0.0977216096162414 0.196076309026378"
+      rpy="-0.00186883076605492 0.123098458475999 -0.786255211903501" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="RHUS9" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+<!--   Left ultra sonic sensor 9 -->
+  <link
+    name="LHUS9">
+    <!-- <inertial>
+      <origin
+        xyz="-0.00265918092876642 -1.2353174039248E-12 0.0100193625139958"
+        rpy="0 0 0" />
+      <mass
+        value="0.0152532066391543" />
+      <inertia
+        ixx="4.77814992940302E-06"
+        ixy="-3.2538981368926E-18"
+        ixz="2.64657807499116E-08"
+        iyy="1.003384637723E-06"
+        iyz="-4.38135627183199E-16"
+        izz="4.55679776636487E-06" />
+    </inertial> -->
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/LHUS9.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+           <box size="0.019 0.057 0.028"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="LHUS9J"
+    type="fixed">
+    <origin
+      xyz="-0.180600634182961 0.14597582665002 0.189449821416576"
+      rpy="0 0 1.57759339506834" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="LHUS9" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+<!--   left ultra sonic sensor 10 -->
+  <link
+    name="LHUS10">
+    <!-- <inertial>
+      <origin
+        xyz="-0.0026592 -2.0817E-17 0.010019"
+        rpy="0 0 0" />
+      <mass
+        value="0.015253" />
+      <inertia
+        ixx="4.7781E-06"
+        ixy="1.1539E-20"
+        ixz="2.6466E-08"
+        iyy="1.0034E-06"
+        iyz="-1.2651E-20"
+        izz="4.5568E-06" />
+    </inertial> -->
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find ebot_description)/meshes/LHUS10.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.25098 0.25098 0.25098 1" />
+      </material>
+    </visual>
+    <!-- <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+           <box size="0.019 0.057 0.028"/>
+      </geometry>
+    </collision> -->
+  </link>
+  <joint
+    name="LHUS10J"
+    type="fixed">
+    <origin
+      xyz="0.14045985551618 0.10004021562239 0.196076309026377"
+      rpy="0.00186883076604301 0.123098458475999 0.799849348450393" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="LHUS10" />
+    <axis
+      xyz="0 0 0" />
+  </joint>  
+
+
+<!-- IMU -->
+  <link name="imu_link">
+    <!-- <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.02 0.015 0.008"/>
+      </geometry>
+    </collision> -->
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+        <box size="0.02 0.015 0.008"/>
+      </geometry>
+    </visual>
+
+    <!-- <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial> -->
+  </link> 
+
+  <joint
+    name="imujoint"
+    type="fixed">
+    <origin
+      xyz="0 0 0.2"
+      rpy="0 0 0" />
+    <parent
+      link="ebot_base" />
+    <child
+      link="imu_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <link name="linear_actuator_link">
+    <visual>
+      <geometry>
+        <box size="0.5 0.05 0.05"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+      <material name="green">
+        <color rgba="0 0.8 .8 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.5 0.05 0.05"/>
+      </geometry>
+      <origin xyz="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.2"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+  </link>
+
+  <joint
+    name="linear_actuator_joint"
+    type="prismatic">
+    <parent link="ebot_base_link"/>
+    <child link="linear_actuator_link"/>
+    <origin xyz="0.2 0 0.25" rpy="0 0 1.57"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="0.0" upper="0.6" effort="100.0" velocity="1.0"/>
+    <dynamics damping="0.1" friction="10"/>
+  </joint>
+
+  <!-- <ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+    <joint name="linear_actuator_joint">
+      <command_interface name="effort">
+        <param name="min">-1000</param>
+        <param name="max">1000</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+  </ros2_control> -->
+  
+  <!-- <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <robot_param>robot_description</robot_param>
+      <robot_param_node>ebot_RD</robot_param_node>
+      <parameters>$(find ebot_description)/config/controller.yaml</parameters>
+    </plugin>
+  </gazebo> -->
+
+</robot>

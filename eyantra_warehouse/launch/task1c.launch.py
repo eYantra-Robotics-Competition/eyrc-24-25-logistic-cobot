@@ -56,9 +56,15 @@ def generate_launch_description():
         arguments = ["1.6", "-2.4", "-0.8", "3.14", "0", "0", "world", "odom"],
         output='screen')
     
+    spawner_box = launch_ros.actions.Node(package='ur_description',
+                       executable='spawner_box_1c.py')
     
-    
-    
+    static_transform_camera = launch_ros.actions.Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_transform_publisher_camera',
+        arguments = ["0.0", "0.05", "0.08", "1.57", "0.0", "0.0", "wrist_2_link", "camera_link_1"],
+        output='screen')
     
 
                 
@@ -69,6 +75,7 @@ def generate_launch_description():
                                             description='Flag to enable use_sim_time'),
         start_world,
         static_transform,
-        
+        # static_transform_camera,
+        spawner_box,
 
     ])

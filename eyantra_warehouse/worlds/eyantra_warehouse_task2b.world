@@ -1,0 +1,351 @@
+<?xml version="1.0"?>
+<!-- 
+*****************************************************************************************
+*
+*        =============================================
+*                  LB Theme (eYRC 2024-25)
+*        =============================================
+*
+*
+*  Filename:			eyantra_warehouse_task0.world
+*  Created:				08/08/2025
+*  Last Modified:	13/08/2024
+*  Modified by:   Siddharth
+*  Author:				e-Yantra Team
+*  
+*****************************************************************************************
+-->
+<sdf version="1.6">
+  <world name="default">
+    <gui>
+      <camera name="user_default">
+        <pose>-5.227 -20.25 5.27 0 0.239 1.28</pose>
+      </camera>
+    </gui>
+
+    <light name="light0" type="directional">
+      <pose frame="">0 -18.818 8 0.75 -0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <direction>0.1 0.1 -0.9</direction>
+      <attenuation>
+        <range>20</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>0</cast_shadows>
+    </light>
+
+
+    <light name="light3" type="directional">
+      <pose frame="">3.9239 1.64974 4 0 1.2 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <direction>0.1 0.1 -0.9</direction>
+      <attenuation>
+        <range>20</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>0</cast_shadows>
+    </light>
+
+
+    <light name="light5" type="directional">
+      <pose frame="">0.454419 12.4783 5 -0.8 0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <direction>0.1 0.1 -0.9</direction>
+      <attenuation>
+        <range>20</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>0</cast_shadows>
+    </light>
+
+    <scene>
+		<shadows>false</shadows>
+		<ambient>0.5 0.5 0.5 1.0</ambient>
+    <grid>false</grid>    
+      <sky>        
+        <time>22</time>
+        <sunrise>20</sunrise>
+        <sunset>21</sunset>
+        <clouds>
+          <humidity>0</humidity>
+        </clouds>        
+      </sky>
+    </scene>
+
+      <include>
+        <uri>model://ground_plane</uri>
+        <pose>-1 -2 0 0 0 0</pose>
+      </include>
+
+	<include> 
+	  	<uri>model://LB_city</uri>
+		  <name>LB_city</name>
+      <pose>12.75 260.65 86.95 0 0 3.6</pose>
+	</include>
+
+  <include>
+      <uri>model://warehouse_boundary</uri>
+      <pose>0 0 -0.21 0 0 0</pose>
+	</include>
+
+  <!-- RACK 1 -->
+  <include>
+      <uri>model://rack</uri>
+      <name>rack1</name>
+      <pose>-3.53 -3.72 0.1 0 -0 3.14</pose>
+	</include>
+
+  <include>
+      <uri>model://boxes/box_1</uri>
+      <name>box1</name>
+      <pose>-3.54 -3.71 1.24 0 -0 0.0</pose>
+	</include>
+
+  <!-- RACK 1 -->
+
+  <!-- RACK 2 -->
+  <include>
+      <uri>model://rack</uri>
+      <name>rack2</name>
+      <pose>-3.52 -0.88 0 0 -0 3.14</pose>
+	</include>
+
+  <include>
+      <uri>model://boxes/box_2</uri>
+      <name>box2</name>
+      <pose>-3.51 -0.88 1.24 0 -0 0</pose>
+	</include>
+
+  <!-- RACK 2 -->
+
+  <!-- RACK 3 -->
+  <include>
+      <uri>model://rack</uri>
+      <name>rack3</name>
+      <pose>1.61065 -1.750503 0.0750 0 0 1.57</pose>
+	</include>
+
+   <include>
+      <uri>model://boxes/box_3</uri>
+      <name>box3</name>
+      <pose>1.61065 -1.840503 1.23 0 0 -1.57</pose>
+	</include>
+
+  <!-- RACK 3 -->
+  <include>
+      <uri>model://aws_robomaker_warehouse_ClutteringD_01</uri>
+      <name>boxes 4</name>
+      <pose>-1.09 -6.62 -0.327 0 -0 -1.57</pose>
+	</include>
+
+  <include>
+      <uri>model://aws_robomaker_warehouse_ClutteringC_01</uri>
+      <name>boxes 2</name>
+      <pose>-1.00 3.98 0 0 -0 0</pose>
+	</include>
+
+
+  <include>
+      <uri>model://aws_robomaker_warehouse_DeskC_01</uri>
+      <name>desk</name>
+      <pose>-0.95 0.69 0 0 -0 -1.57</pose>
+	</include>
+
+  <!-- <include>
+      <uri>model://aws_robomaker_warehouse_PalletJackB_01</uri>
+      <name>palletjab</name>
+      <pose>-4.23 -8.71 0 0 -0 -0.700</pose>
+	</include> 
+
+  <include>
+      <uri>model://aws_robomaker_warehouse_PalletJackB_01</uri>
+      <name>palletjab2</name>
+      <pose>-5.23 -8.71 20 0 -0 -0.700</pose>
+	</include>  -->
+
+  <include>
+      <uri>model://arm_base</uri>
+      <name>arm_base</name>
+      <pose>1.78 -2.4 0.253 0 -0 0.0</pose>
+	</include>
+
+  <include>
+      <uri>model://drop_table</uri>
+      <name>drop_table</name>
+      <pose>1.69 -3.33 0 0 -0 0.0</pose>
+	</include>
+
+  <include>
+      <uri>model://drop_table</uri>
+      <name>drop_table_2</name>
+      <pose>2.4 -2.17 0 0 -0 0.0</pose>
+  </include>
+
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt</name>
+      <pose>2.568306 -3.13 -0.163364 0 -0 1.57</pose>
+	</include>
+
+  <include>
+      <uri>model://window</uri>
+      <name>window</name>
+      <pose>2.70 -3.13 -0.381 0 -0 1.57</pose>
+	</include>
+
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 1</name>
+      <pose>-4.320810 4.77 -0.48 0 -0 1.57</pose>
+	</include>
+
+  <include>
+      <uri>model://window</uri>
+      <name>window 1</name>
+      <pose>-4.98 4.750 -0.465 0 -0 1.57</pose>
+	</include>
+
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 2</name>
+      <pose>2.34 4.770056 -0.48 0 -0 1.57</pose>
+	</include>
+
+  <include>
+      <uri>model://window</uri>
+      <name>window 2</name>
+      <pose>2.80 4.750 -0.465 0 -0 1.57</pose>
+	</include>
+
+  <!-- additional decoratives -->
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 5</name>
+      <pose>-5.63 4.75 -0.48 0 -0 1.57</pose>
+	</include>
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 6</name>
+      <pose>-6.83 4.75 -0.48 0 -0 1.57</pose>
+	</include>
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 7</name>
+      <pose>-8.00 4.75 -0.48 0 -0 1.57</pose>
+	</include>
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 8</name>
+      <pose>-9.20 4.75 -0.48 0 -0 1.57</pose>
+	</include>
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 9</name>
+      <pose>-10.40 4.75 -0.48 0 -0 1.57</pose>
+	</include>
+    <include>
+      <uri>model://window</uri>
+      <name>window 5</name>
+      <pose>-10.61 4.750 -0.50 0 -0 1.57</pose>
+	</include>
+
+  <!-- section -->
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 10</name>
+      <pose>3.33 4.75 -0.48 0 -0 1.57</pose>
+	</include>
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 11</name>
+      <pose>4.53 4.75 -0.48 0 -0 1.57</pose>
+	</include>
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 12</name>
+      <pose>5.73 4.75 -0.48 0 -0 1.57</pose>
+	</include>
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 13</name>
+      <pose>6.93 4.75 -0.48 0 -0 1.57</pose>
+	</include>
+
+  <include>
+      <uri>model://window</uri>
+      <name>window 6</name>
+      <pose>7.39 4.750 -0.52 0 -0 1.57</pose>
+	</include>
+
+  <!-- section -->
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 14</name>
+      <pose>3.76 -3.13 -0.16 0 -0 1.57</pose>
+	</include>
+  <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 15</name>
+      <pose>4.95 -3.13 -0.16 0 -0 1.57</pose>
+	</include>
+    <include>
+      <uri>model://conveyor_belt</uri>
+      <name>Conveyor Belt 16</name>
+      <pose>6.15 -3.13 -0.16 0 -0 1.57</pose>
+	</include>
+
+  <include>
+      <uri>model://window</uri>
+      <name>window 7</name>
+      <pose>6.78 -3.13 -0.39 0 -0 1.57</pose>
+	</include>
+
+  <!-- end of decoratives -->
+
+  <!-- Task 2 Changes -->
+  <include>
+      <uri>model://window</uri>
+      <name>window 8</name>
+      <pose>2.36 4.61 -1.08 0 -0 -3.14</pose>
+	</include>
+
+  <include>
+      <uri>model://window</uri>
+      <name>window 9</name>
+      <pose>-4.55 4.61 -1.08 0 -0 -3.14</pose>
+	</include>
+
+  <include>
+      <uri>model://drop_table</uri>
+      <name>drop_table_4</name>
+      <pose>1.72 4.48 -0.26 0 -0 0.0</pose>
+  </include>
+
+  <include>
+      <uri>model://drop_table</uri>
+      <name>drop_table_5</name>
+      <pose>-3.93 4.48 -0.26 0 -0 0.0</pose>
+  </include>
+  <!-- Task 2 Changes END -->
+  <plugin name="gazebo_link_attacher" filename="libgazebo_link_attacher.so"/>
+  <plugin name="gazebo_link_ur5_attacher" filename="libgazebo_link_ur5_attacher.so"/>
+
+  <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">
+    <ros>
+      <namespace>/_makeit</namespace>
+    </ros>
+
+    <update_rate>1.0</update_rate>
+  </plugin>
+
+  </world>
+</sdf>

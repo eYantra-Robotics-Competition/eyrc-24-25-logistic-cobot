@@ -136,7 +136,7 @@
   <joint name="realsense_joint" type="fixed">
     <parent link="base_link" />
     <child link="camera_link" />
-    <origin xyz="-0.97 0.0 1.04" rpy="0.0 0.261 0.0" /> 
+      <origin xyz="1.152 0.02 1.2379" rpy="0.0 0.8342674 3.14" />  
   </joint>
 
 

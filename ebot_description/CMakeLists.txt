@@ -54,11 +54,13 @@ install(
 
 install(DIRECTORY
   ebot_description/pyarmor_runtime_000000
+  ebot_description/armed_spwaner/pyarmor_runtime_000000
   DESTINATION lib/${PROJECT_NAME}
 )
 
 install(PROGRAMS
   ebot_description/payload.py
+  ebot_description/armed_spwaner/spawner.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

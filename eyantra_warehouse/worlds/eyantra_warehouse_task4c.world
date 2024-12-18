@@ -133,12 +133,12 @@
       <name>rack3</name>
       <pose>1.61065 -1.750503 0.0750 0 0 1.57</pose>
 	</include>
-
+	-->
    <include>
       <uri>model://boxes/box_3</uri>
       <name>box3</name>
       <pose>1.61065 -1.840503 1.23 0 0 -1.57</pose>
-	</include> -->
+	</include> 
 
   <!-- RACK 3 -->
   <include>
@@ -354,7 +354,7 @@
   </include>
 
   <!-- Task 2 Changes END -->
-  <plugin name="gazebo_link_attacher" filename="libgazebo_link_attacher.so"/>
+  <!-- <plugin name="gazebo_link_attacher" filename="libgazebo_link_attacher.so"/> -->
   <plugin name="gazebo_link_ur5_attacher" filename="libgazebo_link_ur5_attacher.so"/>
 
   <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">

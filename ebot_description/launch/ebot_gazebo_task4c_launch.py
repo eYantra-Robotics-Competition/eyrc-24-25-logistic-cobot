@@ -74,6 +74,8 @@ def generate_launch_description():
         output='screen'
     )
 
+    spwanner = launch_ros.actions.Node(package='ebot_description',
+                    executable='spawner.py')
                                                  
     return launch.LaunchDescription([
         launch.actions.DeclareLaunchArgument(name='gui', default_value='True',
@@ -83,5 +85,6 @@ def generate_launch_description():
         start_world,
         robot_state_publisher_node_ebot,
         spawn_ebot,
-        static_transform
+        static_transform,
+        spwanner
     ])
